@@ -1,0 +1,31 @@
+/* style.css */
+
+/* Atur background dengan gambar */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url('assets/image/chicken-farm.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Kotak putih tengah */
+.about-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Judul */
+h2 {
+    text-align: center;
+    color: #2c5e3f;
+}
+
+/* Teks */
+p, li {
+    line-height: 1.6;
+    text-align: center;
+}

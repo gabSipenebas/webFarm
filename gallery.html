@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Galeri - Ayam Sejahtera</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+  .gallery-section {
+  position: relative;
+  width: 100%;
+  min-height: 600px; /* ganti sesuai kebutuhan */
+  background-image: url('assets/image/chicken-farm.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
+}
+
+.gallery-section .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* overlay gelap */
+}
+
+.gallery-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px; /* biar konten tidak terlalu melebar */
+  width: 90%;
+  text-align: center;
+}
+    .gallery-container {
+      text-align: center;
+      padding: 40px;
+      background: #fff;
+      position: relative;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .gallery-scroll {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      padding: 10px;
+      border: 2px solid #b87333;
+      border-radius: 15px;
+      background: #fdfdfd;
+    }
+
+    .gallery-scroll::-webkit-scrollbar {
+      display: none; /* sembunyikan scrollbar */
+    }
+
+    .gallery-scroll img {
+      height: 180px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Tombol panah */
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(184,115,51,0.8);
+      color: white;
+      border: none;
+      padding: 12px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 20px;
+    }
+
+    .arrow-left { left: -20px; }
+    .arrow-right { right: -20px; }
+
+    /* Indicator bulat */
+    .indicators {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #ccc;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: #b87333;
+    }
+  </style>
+</head>
+<body class="bg-gray-100">
+
+  <!-- Navbar -->
+  <nav class="bg-yellow-700 text-white p-4 flex justify-between">
+    <h1 class="font-bold text-xl">Ayam Sejahtera</h1>
+    <ul class="flex space-x-6">
+      <li><a href="index.html" class="hover:underline">Home</a></li>
+      <li><a href="about.html" class="hover:underline">Tentang Kami</a></li>
+      <li><a href="products.html" class="hover:underline">Produk</a></li>
+      <li><a href="gallery.html" class="hover:underline">Galeri</a></li>
+      <li><a href="contact.html" class="hover:underline">Kontak</a></li>
+    </ul>
+  </nav>
+    <!-- Galeri -->
+    <section class="gallery-section">
+    <div class="overlay"></div>
+
+    <div class="gallery-content">
+    <h2 class="text-2xl font-bold mb-4 text-white drop-shadow-lg">Galeri Peternakan</h2>
+
+    <!-- Tombol kiri -->
+    <button class="arrow arrow-left" onclick="scrollGallery(-300)">&#10094;</button>
+
+    <div id="gallery" class="gallery-scroll bg-white/90 backdrop-blur-md">
+      <img src="assets/image/peternakan1.jpg" alt="Peternakan 1">
+      <img src="assets/image/panentelur1.jpeg" alt="Peternakan 2">
+      <img src="assets/image/ternak2.jpg" alt="Peternakan 3">
+      <img src="assets/image/petelur1.jpg" alt="Peternakan 4">
+      <img src="assets/image/ternak-ayam.jpg" alt="Peternakan 5">
+    </div>
+
+    <!-- Tombol kanan -->
+    <button class="arrow arrow-right" onclick="scrollGallery(300)">&#10095;</button>
+
+    <!-- Indicator -->
+    <div id="indicators" class="indicators"></div>
+  </div>
+    </section>
+
+  <script>
+    const gallery = document.getElementById("gallery");
+    const images = gallery.querySelectorAll("img");
+    const indicators = document.getElementById("indicators");
+
+    // Buat dot sesuai jumlah gambar
+    images.forEach((_, index) => {
+      const dot = document.createElement("div");
+      dot.classList.add("dot");
+      if (index === 0) dot.classList.add("active");
+      dot.addEventListener("click", () => {
+        gallery.scrollTo({
+          left: index * (images[0].offsetWidth + 15), // posisi scroll sesuai gambar
+          behavior: 'smooth'
+        });
+      });
+      indicators.appendChild(dot);
+    });
+
+    function scrollGallery(amount) {
+      gallery.scrollBy({
+        left: amount,
+        behavior: 'smooth'
+      });
+    }
+
+    // Update indicator saat scroll
+    gallery.addEventListener("scroll", () => {
+      const index = Math.round(gallery.scrollLeft / (images[0].offsetWidth + 15));
+      document.querySelectorAll(".dot").forEach((dot, i) => {
+        dot.classList.toggle("active", i === index);
+      });
+    });
+  </script>
+
+</body>
+</html>
